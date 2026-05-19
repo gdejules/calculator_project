@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator App</title>
+    <link rel="icon" href="https://fav.farm/%F0%9F%A7%AE" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column">
+      <div id="display" style="background-color: whitesmoke; padding: 8px">
+        <span
+          class="first"
+          style="font-family: monospace; color: darkgrey"
+        ></span
+        ><span
+          class="opr"
+          style="font-family: monospace; color: darkgrey"
+        ></span
+        ><span
+          class="second"
+          style="font-family: monospace; color: darkgrey"
+        ></span>
+      </div>
+      <div id="buttons" style="display: flex">
+        <ul class="first-col" style="list-style: none; padding: 0; margin: 0">
+          <li><button class="plus">+</button></li>
+          <li><button class="equal">=</button></li>
+          <li><button class="seven">7</button></li>
+          <li><button class="three">3</button></li>
+        </ul>
+        <ul class="second-col" style="list-style: none; padding: 0; margin: 0">
+          <li><button class="min">−</button></li>
+          <li><button class="clear">c</button></li>
+          <li><button class="six">6</button></li>
+          <li><button class="two">2</button></li>
+        </ul>
+        <ul class="third-col" style="list-style: none; padding: 0; margin: 0">
+          <li><button class="multiply">×</button></li>
+          <li><button class="nine">9</button></li>
+          <li><button class="five">5</button></li>
+          <li><button id="one">1</button></li>
+        </ul>
+        <ul class="fourth-col" style="list-style: none; padding: 0; margin: 0">
+          <li><button class="div">÷</button></li>
+          <li><button class="eight">8</button></li>
+          <li><button class="four">4</button></li>
+          <li><button class="zero">0</button></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
