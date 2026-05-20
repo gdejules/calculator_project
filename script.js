@@ -16,66 +16,64 @@ const divide = function (a, b) {
 };
 
 // input variables
-let firstNumDisplay = document.querySelector(".first");
-let operatorDisplay = document.querySelector(".opr");
-let secondNumDisplay = document.querySelector(".second");
-let firstNum = "0";
-let secondNum = "";
+let firstNumber = "0";
+let secondNumber = "";
 let operator = "";
 let input = "";
+let result = "";
 
-// initial display
-firstNumDisplay.textContent = `${firstNum}`;
-operatorDisplay.textContent = `${operator}`;
-secondNumDisplay.textContent = `${secondNum}`;
+// initiate DOM node to display numbers
+let numDisplay = document.querySelector(".number-display");
+numDisplay.textContent = `${firstNumber}`;
 
 // function to trigger operation
-function operate(operator, firstNum, secondNum) {
-  let result = "0";
+function operate(operator, firstNumber, secondNumber) {
   switch (operator) {
     case "+":
-      result = add(firstNum, secondNum);
-      firstNumDisplay.textContent = `${result}`;
-      operatorDisplay.textContent = "";
-      secondNumDisplay.textContent = "";
+      result = add(firstNumber, secondNumber);
       break;
     case "−":
-      return subtract(firstNum, secondNum);
+      result = subtract(firstNumber, secondNumber);
       break;
     case "×":
-      return multiply(firstNum, secondNum);
+      result = multiply(firstNumber, secondNumber);
       break;
     case "÷":
-      return divide(firstNum, secondNum);
+      result = divide(firstNumber, secondNumber);
       break;
   }
+  firstNumber = result;
+  secondNumber = "";
+  return result;
+  // numDisplay.textContent = `${firstNumber}`;
 }
 
 // function to handle display
-function numDisplay(input) {
-  if (firstNum == "0") {
-    firstNum = input;
-  } else if (operator != "") {
-    if (secondNum == "") {
-      secondNum = input;
+function updateDisplay(input, result) {
+  if (firstNumber == "0") {
+    firstNumber = input;
+    numDisplay.textContent = `${firstNumber}`;
+  } else if (operator != "" || result != "") {
+    if (secondNumber == "") {
+      secondNumber = input;
+      numDisplay.textContent = `${secondNumber}`;
     } else {
-      secondNum += input;
+      secondNumber += input;
+      numDisplay.textContent = `${secondNumber}`;
     }
   } else {
-    firstNum += input;
+    firstNumber += input;
+    numDisplay.textContent = `${firstNumber}`;
   }
-  firstNumDisplay.textContent = `${firstNum}`;
-  secondNumDisplay.textContent = `${secondNum}`;
 }
 
 // function to clear display
 function clearDisplay() {
-  firstNum = "0";
-  secondNum = "";
+  firstNumber = "0";
+  secondNumber = "";
   operator = "";
-  firstNumDisplay.textContent = `${firstNum}`;
-  secondNumDisplay.textContent = `${secondNum}`;
-  operatorDisplay.textContent = `${operator}`;
+  result = "";
+  numDisplay.textContent = `${firstNumber}`;
 }
 
 // initialize buttons DOM
@@ -95,49 +93,45 @@ buttonsFirstCol.addEventListener("click", (e) => {
       break;
     case "seven":
       input = "7";
-      numDisplay(input);
+      updateDisplay(input);
       break;
     case "four":
       input = "4";
-      numDisplay(input);
+      updateDisplay(input);
       break;
     case "one":
       input = "1";
-      numDisplay(input);
+      updateDisplay(input);
       break;
     case "zero":
       input = "0";
-      numDisplay(input);
+      updateDisplay(input);
       break;
   }
 });
 
-// event listeners to operators buttons
+// event listeners for operators buttons
 buttonsOperators.addEventListener("click", (e) => {
   let target = e.target;
 
   switch (target.id) {
     case "div":
       operator = "÷";
-      operatorDisplay.textContent = `${operator}`;
       break;
     case "multiply":
       operator = "×";
-      operatorDisplay.textContent = `${operator}`;
       break;
     case "min":
       operator = "−";
-      operatorDisplay.textContent = `${operator}`;
       break;
     case "plus":
       operator = "+";
-      operatorDisplay.textContent = `${operator}`;
       break;
     case "equal":
-      operate(operator, firstNum, secondNum);
+      operate(operator, firstNumber, secondNumber);
+      updateDisplay();
       break;
   }
-  // operatorDisplay.textContent = `${operator}`;
 });
 
 // Make partial function that can be called for various conditions e.g:
@@ -150,3 +144,9 @@ buttonsOperators.addEventListener("click", (e) => {
 // 1. Make one number display (no need for secondNumDisplay)
 // 2. No need for displaying operator
 // 3. Make 2 pair operation at a time (return result when clicking operators after second num input)
+
+// Discard display to show operator input
+// let operatorDisplay = document.querySelector(".opr");
+// let secondNumDisplay = document.querySelector(".second");
+// operatorDisplay.textContent = `${operator}`;
+// secondNumDisplay.textContent = `${secondNum}`;
