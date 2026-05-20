@@ -15,16 +15,37 @@ const divide = function (a, b) {
   return Number(a) / Number(b);
 };
 
-// input variables
-let firstNumber = "0";
-let secondNumber = "";
+// input variables initiate as string primarily
+// to make it easier for appending number when user click number button,
+// but lets try to make it as number right now
+let firstNumber = 0;
+let secondNumber = 0;
 let operator = "";
 let input = "";
-let result = "";
+let result = 0;
 
 // initiate DOM node to display numbers
 let numDisplay = document.querySelector(".number-display");
 numDisplay.textContent = `${firstNumber}`;
+
+// lets try new approach
+/*
+// function to update variable value
+function updateVariable(input, firstNumber, secondNumber, operator, result) {
+  if (firstNumber == "0") {
+    firstNumber = input;
+  } else if (operator != "") {
+    if (secondNumber == "") {
+      secondNumber += input;
+    }
+  } else if (result != "") {
+    secondNumber = "";
+    firstNumber = result;
+    secondNumber += input;
+  } else {
+    firstNumber += input;
+  }
+}
 
 // function to trigger operation
 function operate(operator, firstNumber, secondNumber) {
@@ -42,28 +63,20 @@ function operate(operator, firstNumber, secondNumber) {
       result = divide(firstNumber, secondNumber);
       break;
   }
-  firstNumber = result;
-  secondNumber = "";
+  // firstNumber = result;
+  // secondNumber = "";
   return result;
   // numDisplay.textContent = `${firstNumber}`;
 }
 
 // function to handle display
-function updateDisplay(input, result) {
-  if (firstNumber == "0") {
-    firstNumber = input;
+function updateDisplay(firstNumber, secondNumber, operator, result) {
+  if (operator == "") {
     numDisplay.textContent = `${firstNumber}`;
-  } else if (operator != "" || result != "") {
-    if (secondNumber == "") {
-      secondNumber = input;
-      numDisplay.textContent = `${secondNumber}`;
-    } else {
-      secondNumber += input;
-      numDisplay.textContent = `${secondNumber}`;
-    }
-  } else {
-    firstNumber += input;
-    numDisplay.textContent = `${firstNumber}`;
+  } else if (operator != "" && secondNumber != "") {
+    numDisplay.textContent = `${secondNumber}`;
+  } else if (result != "") {
+    numDisplay.textContent = `${result}`;
   }
 }
 
@@ -93,19 +106,23 @@ buttonsFirstCol.addEventListener("click", (e) => {
       break;
     case "seven":
       input = "7";
-      updateDisplay(input);
+      updateVariable(input, firstNumber, secondNumber, operator, result);
+      updateDisplay(firstNumber, secondNumber, operator, result);
       break;
     case "four":
       input = "4";
-      updateDisplay(input);
+      updateVariable(input, firstNumber, secondNumber, operator, result);
+      updateDisplay(firstNumber, secondNumber, operator, result);
       break;
     case "one":
       input = "1";
-      updateDisplay(input);
+      updateVariable(input, firstNumber, secondNumber, operator, result);
+      updateDisplay(firstNumber, secondNumber, operator, result);
       break;
     case "zero":
       input = "0";
-      updateDisplay(input);
+      updateVariable(input, firstNumber, secondNumber, operator, result);
+      updateDisplay(firstNumber, secondNumber, operator, result);
       break;
   }
 });
@@ -129,10 +146,11 @@ buttonsOperators.addEventListener("click", (e) => {
       break;
     case "equal":
       operate(operator, firstNumber, secondNumber);
-      updateDisplay();
+      updateDisplay(firstNumber, secondNumber, operator, result);
       break;
   }
 });
+*/
 
 // Make partial function that can be called for various conditions e.g:
 // 1. entering number for firstNum variable
