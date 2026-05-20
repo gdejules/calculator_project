@@ -20,80 +20,99 @@ let firstNumDisplay = document.querySelector(".first");
 let operatorDisplay = document.querySelector(".opr");
 let secondNumDisplay = document.querySelector(".second");
 let firstNum = "0";
-let secondNum = "0";
+let secondNum = "";
 let operator = "";
+let input = "";
 
 // initial display
 firstNumDisplay.textContent = `${firstNum}`;
+operatorDisplay.textContent = `${operator}`;
+secondNumDisplay.textContent = `${secondNum}`;
 
 // function to trigger operation
 function operate(operator, firstNum, secondNum) {
+  let result = "0";
   switch (operator) {
     case "+":
-      return add(firstNum, secondNum);
+      result = add(firstNum, secondNum);
+      firstNumDisplay.textContent = `${result}`;
+      operatorDisplay.textContent = "";
+      secondNumDisplay.textContent = "";
       break;
-    case "-":
+    case "−":
       return subtract(firstNum, secondNum);
       break;
-    case "*":
+    case "×":
       return multiply(firstNum, secondNum);
       break;
-    case "/":
+    case "÷":
       return divide(firstNum, secondNum);
       break;
   }
 }
 
-// function to update variable when user input number or operator
+// function to handle display
+function numDisplay(input) {
+  if (firstNum == "0") {
+    firstNum = input;
+  } else if (operator != "") {
+    if (secondNum == "") {
+      secondNum = input;
+    } else {
+      secondNum += input;
+    }
+  } else {
+    firstNum += input;
+  }
+  firstNumDisplay.textContent = `${firstNum}`;
+  secondNumDisplay.textContent = `${secondNum}`;
+}
+
+// function to clear display
+function clearDisplay() {
+  firstNum = "0";
+  secondNum = "";
+  operator = "";
+  firstNumDisplay.textContent = `${firstNum}`;
+  secondNumDisplay.textContent = `${secondNum}`;
+  operatorDisplay.textContent = `${operator}`;
+}
+
+// initialize buttons DOM
 const buttons = document.querySelector("#buttons");
-// const one = buttons.querySelector(".one");
 const buttonsFirstCol = buttons.querySelector(".first-col");
 const buttonsSecondCol = buttons.querySelector(".second-col");
 const buttonsThirdCol = buttons.querySelector(".third-col");
 const buttonsOperators = buttons.querySelector(".operators");
 
+// buttons event listener to update display and variable
 buttonsFirstCol.addEventListener("click", (e) => {
   let target = e.target;
 
   switch (target.id) {
     case "clear":
-      firstNum = "0";
-      operator = "";
-      secondNum = "";
+      clearDisplay();
       break;
     case "seven":
-      if (firstNum == "0") {
-        firstNum = "7";
-      } else {
-        firstNum += "7";
-      }
+      input = "7";
+      numDisplay(input);
       break;
     case "four":
-      if (firstNum == "0") {
-        firstNum = "4";
-      } else {
-        firstNum += "4";
-      }
+      input = "4";
+      numDisplay(input);
       break;
     case "one":
-      if (firstNum == "0") {
-        firstNum = "1";
-      } else {
-        firstNum += "1";
-      }
+      input = "1";
+      numDisplay(input);
       break;
     case "zero":
-      if (firstNum == "0") {
-        firstNum = "0";
-      } else {
-        firstNum += "0";
-      }
+      input = "0";
+      numDisplay(input);
       break;
   }
-  firstNumDisplay.textContent = `${firstNum}`;
-  return firstNum;
 });
 
+// event listeners to operators buttons
 buttonsOperators.addEventListener("click", (e) => {
   let target = e.target;
 
@@ -115,8 +134,19 @@ buttonsOperators.addEventListener("click", (e) => {
       operatorDisplay.textContent = `${operator}`;
       break;
     case "equal":
-      if (operator == "÷") {
-        divide(firstNum, secondNum);
-      }
+      operate(operator, firstNum, secondNum);
+      break;
   }
+  // operatorDisplay.textContent = `${operator}`;
 });
+
+// Make partial function that can be called for various conditions e.g:
+// 1. entering number for firstNum variable
+// 2. clicking number buttons when two num variables and operators already clicked
+// 3. entering number for secondNum variable
+// 4. entering zero for the first time
+
+// Tomorrow (21 May)
+// 1. Make one number display (no need for secondNumDisplay)
+// 2. No need for displaying operator
+// 3. Make 2 pair operation at a time (return result when clicking operators after second num input)
