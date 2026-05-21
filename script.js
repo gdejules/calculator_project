@@ -21,8 +21,6 @@ const divide = function (a, b) {
 let result = 0;
 let input = "";
 
-let cal = { firstNumber: "", secondNumber: "", operator: "" };
-
 // function to trigger operation
 function operate(operator, firstNumber, secondNumber) {
   switch (operator) {
@@ -42,8 +40,78 @@ function operate(operator, firstNumber, secondNumber) {
   return result;
 }
 
+const numerical = "0123456789";
+const operator = ["div", "multiply", "min", "plus"];
+
+// function to update variable value and also display
+// let cal = { firstNumber: "", secondNumber: "", operator: "" };
+
+const cal = {
+  firstNumber: "",
+  secondNumber: "",
+  operator: "",
+  equal: false,
+  result: false,
+};
+
+function updateVar(input) {
+  switch (true) {
+    case numerical.includes(input): {
+      if (cal.firstNumber === "" && cal.operator === "") {
+        cal.firstNumber += input;
+      } else if (cal.firstNumber !== "" && cal.operator === "") {
+        cal.firstNumber += input;
+      } else if (cal.operator !== "") {
+        cal.secondNumber += input;
+      }
+      break;
+    }
+    case operator.includes(input): {
+      if (cal.firstNumber === "" && cal.secondNumber === "") {
+        cal.operator = "";
+      } else if (cal.firstNumber !== "" && cal.secondNumber === "") {
+        cal.operator = input;
+      } else if (cal.firstNumber !== "" && cal.secondNumber !== "") {
+        operate(cal.operator, cal.firstNumber, cal.secondNumber);
+        cal.firstNumber = result;
+        cal.result = true;
+        cal.operator = input;
+      }
+      break;
+    }
+    case input === "equal": {
+      if (cal.firstNumber === "") {
+        cal.equal = false;
+      } else if (cal.firstNumber !== "" && cal.operator === "") {
+        cal.equal = false;
+      } else if (cal.firstNumber !== "" && cal.operator !== "") {
+        if (cal.secondNumber === "") {
+          cal.equal = true;
+          cal.result = true;
+          cal.secondNumber = cal.firstNumber;
+          operate(cal.operator, cal.firstNumber, cal.secondNumber);
+          cal.firstNumber = result;
+          cal.secondNumber = "";
+        } else if (cal.secondNumber !== "") {
+          cal.equal = true;
+          cal.result = true;
+          operate(cal.operator, cal.firstNumber, cal.secondNumber);
+          cal.firstNumber = result;
+          cal.secondNumber = "";
+        }
+      }
+      break;
+    }
+  }
+  return cal;
+}
+
 // initialize buttons DOM
 const buttons = document.querySelector("#buttons");
+
+// initialize display DOM
+let numDisplay = document.querySelector(".number-display");
+numDisplay.textContent = "0";
 
 // buttons event listener to update display and variable
 buttons.addEventListener("click", (e) => {
@@ -84,8 +152,7 @@ buttons.addEventListener("click", (e) => {
       input = "0";
       break;
     case "div":
-      operator = "div";
-      console.log(operator);
+      input = "div";
       break;
     case "multiply":
       input = "multiply";
@@ -100,44 +167,48 @@ buttons.addEventListener("click", (e) => {
       input = "equal";
       break;
   }
-  console.log(input);
+
   updateVar(input);
+  console.log(cal);
+
+  let myEvent = new CustomEvent("update-display", {
+    detail: {
+      firstNumber: cal.firstNumber,
+      secondNumber: cal.secondNumber,
+      operator: cal.operator,
+      equal: cal.equal,
+      result: cal.result,
+    },
+  });
+
+  numDisplay.dispatchEvent(myEvent);
 });
 
-console.log(input);
+numDisplay.addEventListener("update-display", (e) => {
+  let first = e.detail.firstNumber;
+  let second = e.detail.secondNumber;
+  let operator = e.detail.operator;
+  let equal = e.detail.equal;
+  let result = e.detail.result;
 
-let numDisplay = document.querySelector(".number-display");
-numDisplay.textContent = "0";
-
-// function to update variable value and also display
-function updateVar(input) {
-  const numerical = "0123456789";
-  const operator = ["div", "multiply", "min", "plus"];
-  // let first = cal.firstNumber;
-  // let second = cal.secondNumber;
-  // let opr = cal.operator;
-
-  switch (true) {
-    case numerical.includes(input): {
-      if (cal.operator === "") {
-        cal.firstNumber += input;
-        console.log(cal);
-        // numDisplay.textContent = `${firstNumber}`;
-      } else if (cal.operator !== "") {
-        cal.secondNumber += input;
-        console.log(cal);
-      }
-      break;
+  if (first === "" && operator === "") {
+    numDisplay.textContent = "0";
+  } else if (first !== "" && operator === "") {
+    numDisplay.textContent = first;
+  } else if (first !== "" && operator !== "") {
+    if (second === "") {
+      numDisplay.textContent = first;
+    } else if (second !== "") {
+      numDisplay.textContent = second;
     }
-    case operator.includes(input): {
-      if (cal.firstNumber !== "") {
-        cal.operator = input;
-        console.log(cal);
-      }
-      break;
+  } else if (first !== "" && second !== "") {
+    if (equal === false && result === false) {
+      numDisplay.textContent = second;
+    } else if (equal === false && result === true) {
+      numDisplay.textContent = first;
+    } else if (equal === true && result === true) {
+      numDisplay.textContent = e.detail.firstNumber;
+      console.log(first);
     }
   }
-  // cal.firstNumber = 10;
-  return cal;
-}
-console.log(cal);
+});
