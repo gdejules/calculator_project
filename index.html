@@ -6,42 +6,32 @@
     <title>Calculator App</title>
     <link rel="icon" href="https://fav.farm/%F0%9F%A7%AE" />
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div style="display: flex; flex-direction: column">
-      <div id="display" style="background-color: whitesmoke; padding: 8px">
-        <span
-          class="number-display"
-          style="font-family: monospace; color: darkgrey"
-        ></span>
-        <!-- <span
-          class="opr"
-          style="font-family: monospace; color: darkgrey"
-        ></span
-        ><span
-          class="second"
-          style="font-family: monospace; color: darkgrey"
-        ></span> -->
+    <div id="interface">
+      <div id="display">
+        <span class="number-display"></span>
       </div>
-      <div id="buttons" style="display: flex; align-items: center">
-        <ul class="first-col" style="list-style: none; padding: 0; margin: 0">
+      <div id="buttons">
+        <ul class="first-col">
           <li><button id="clear">c</button></li>
           <li><button id="seven">7</button></li>
           <li><button id="four">4</button></li>
           <li><button id="one">1</button></li>
           <li><button id="zero">0</button></li>
         </ul>
-        <ul class="second-col" style="list-style: none; padding: 0; margin: 0">
+        <ul class="second-col">
           <li><button id="eight">8</button></li>
           <li><button id="five">5</button></li>
           <li><button id="two">2</button></li>
         </ul>
-        <ul class="third-col" style="list-style: none; padding: 0; margin: 0">
+        <ul class="third-col">
           <li><button id="nine">9</button></li>
           <li><button id="six">6</button></li>
           <li><button id="three">3</button></li>
         </ul>
-        <ul class="operators" style="list-style: none; padding: 0; margin: 0">
+        <ul class="operators">
           <li><button id="div">÷</button></li>
           <li><button id="multiply">×</button></li>
           <li><button id="min">−</button></li>
