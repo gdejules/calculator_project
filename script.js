@@ -102,6 +102,13 @@ function updateVar(input) {
       }
       break;
     }
+    case input === "clear": {
+      cal.firstNumber = "";
+      cal.secondNumber = "";
+      cal.operator = "";
+      cal.equal = "";
+      cal.result = "";
+    }
   }
   return cal;
 }
