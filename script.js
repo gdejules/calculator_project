@@ -12,7 +12,7 @@ const multiply = function (a, b) {
 };
 
 const divide = function (a, b) {
-  return Number(a) / Number(b);
+  return Math.round((Number(a) / Number(b)) * 100) / 100;
 };
 
 // let firstNumber = "";
@@ -107,8 +107,8 @@ function updateVar(input) {
       cal.firstNumber = "";
       cal.secondNumber = "";
       cal.operator = "";
-      cal.equal = "";
-      cal.result = "";
+      cal.equal = false;
+      cal.result = false;
     }
   }
   return cal;
