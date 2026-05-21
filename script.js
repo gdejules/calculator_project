@@ -19,6 +19,8 @@ const divide = function (a, b) {
 // let secondNumber = "";
 // let operator = "";
 let result = 0;
+let input = "";
+
 let cal = { firstNumber: "", secondNumber: "", operator: "" };
 
 // function to trigger operation
@@ -46,7 +48,6 @@ const buttons = document.querySelector("#buttons");
 // buttons event listener to update display and variable
 buttons.addEventListener("click", (e) => {
   let target = e.target;
-  let input = "";
 
   switch (target.id) {
     case "clear":
@@ -83,7 +84,8 @@ buttons.addEventListener("click", (e) => {
       input = "0";
       break;
     case "div":
-      input = "div";
+      operator = "div";
+      console.log(operator);
       break;
     case "multiply":
       input = "multiply";
@@ -98,9 +100,44 @@ buttons.addEventListener("click", (e) => {
       input = "equal";
       break;
   }
+  console.log(input);
+  updateVar(input);
 });
+
+console.log(input);
 
 let numDisplay = document.querySelector(".number-display");
 numDisplay.textContent = "0";
 
 // function to update variable value and also display
+function updateVar(input) {
+  const numerical = "0123456789";
+  const operator = ["div", "multiply", "min", "plus"];
+  // let first = cal.firstNumber;
+  // let second = cal.secondNumber;
+  // let opr = cal.operator;
+
+  switch (true) {
+    case numerical.includes(input): {
+      if (cal.operator === "") {
+        cal.firstNumber += input;
+        console.log(cal);
+        // numDisplay.textContent = `${firstNumber}`;
+      } else if (cal.operator !== "") {
+        cal.secondNumber += input;
+        console.log(cal);
+      }
+      break;
+    }
+    case operator.includes(input): {
+      if (cal.firstNumber !== "") {
+        cal.operator = input;
+        console.log(cal);
+      }
+      break;
+    }
+  }
+  // cal.firstNumber = 10;
+  return cal;
+}
+console.log(cal);
