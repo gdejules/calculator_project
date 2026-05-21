@@ -72,9 +72,10 @@ function updateVar(input) {
       } else if (cal.firstNumber !== "" && cal.secondNumber === "") {
         cal.operator = input;
       } else if (cal.firstNumber !== "" && cal.secondNumber !== "") {
+        cal.result = true;
         operate(cal.operator, cal.firstNumber, cal.secondNumber);
         cal.firstNumber = result;
-        cal.result = true;
+        cal.secondNumber = "";
         cal.operator = input;
       }
       break;
@@ -214,7 +215,7 @@ numDisplay.addEventListener("update-display", (e) => {
     } else if (equal === false && result === true) {
       numDisplay.textContent = first;
     } else if (equal === true && result === true) {
-      numDisplay.textContent = e.detail.firstNumber;
+      numDisplay.textContent = first;
       console.log(first);
     }
   }
